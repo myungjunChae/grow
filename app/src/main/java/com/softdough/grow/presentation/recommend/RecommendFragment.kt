@@ -1,4 +1,4 @@
-package com.softdough.grow.ui.tools
+package com.softdough.grow.presentation.recommend
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.softdough.grow.R
 
-class ToolsFragment : Fragment() {
+class RecommendFragment : Fragment() {
 
-    private lateinit var toolsViewModel: ToolsViewModel
+    private lateinit var recommendViewModel: RecommendViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        toolsViewModel =
-            ViewModelProviders.of(this).get(ToolsViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_tools, container, false)
-        val textView: TextView = root.findViewById(R.id.text_tools)
-        toolsViewModel.text.observe(this, Observer {
+        recommendViewModel =
+            ViewModelProviders.of(this).get(RecommendViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_recommend, container, false)
+        val textView: TextView = root.findViewById(R.id.text_gallery)
+        recommendViewModel.text.observe(this, Observer {
             textView.text = it
         })
         return root
