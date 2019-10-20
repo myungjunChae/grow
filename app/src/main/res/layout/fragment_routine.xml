@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".presentation.main.MainActivity">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/vertical_guideline_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="16dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/vertical_guideline_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="16dp" />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/routine_collection_view_pager"
+                android:layout_width="0dp"
+                android:layout_height="240dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.softdough.grow.presentation.indicator.Indicator
+                android:id="@+id/routine_collection_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="7dp"
+                app:layout_constraintBottom_toBottomOf="@id/routine_collection_view_pager"
+                app:layout_constraintEnd_toEndOf="@id/routine_collection_view_pager" />
+
+            <TextView
+                android:id="@+id/routine_collection_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="개인 운동 및 커스텀 프로그램"
+                app:layout_constraintStart_toStartOf="@id/vertical_guideline_1"
+                app:layout_constraintTop_toBottomOf="@id/routine_collection_view_pager" />
+
+            <TextView
+                android:id="@+id/routine_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:text="운동 시작하기"
+                app:layout_constraintStart_toStartOf="@id/vertical_guideline_1"
+                app:layout_constraintTop_toBottomOf="@id/routine_collection_title" />
+
+            <TextView
+                android:id="@+id/routine_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="체계화된 웨이트 트레이닝 기법을 제공합니다"
+                app:layout_constraintStart_toStartOf="@id/vertical_guideline_1"
+                app:layout_constraintTop_toBottomOf="@id/routine_title" />
+
+            <GridLayout
+                android:id="@+id/routine_grid_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:columnCount="2"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/vertical_guideline_2"
+                app:layout_constraintStart_toStartOf="@id/vertical_guideline_1"
+                app:layout_constraintTop_toBottomOf="@id/routine_description" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>
