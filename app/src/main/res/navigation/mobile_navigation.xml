@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/nav_recommend"
-        android:name="com.softdough.grow.presentation.recommend.RecommendFragment"
+        android:name="com.softdough.grow.presentation.routine.recommend.RecommendFragment"
         android:label="@string/menu_recommend"
         tools:layout="@layout/fragment_routine" />
 
     <fragment
         android:id="@+id/nav_custom"
-        android:name="com.softdough.grow.presentation.custom.CustomFragment"
+        android:name="com.softdough.grow.presentation.routine.custom.CustomFragment"
         android:label="@string/menu_custom"
         tools:layout="@layout/fragment_routine" />
 

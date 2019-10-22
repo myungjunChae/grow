@@ -1,4 +1,4 @@
-package com.softdough.grow.presentation.recommend
+package com.softdough.grow.presentation.routine.recommend
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.softdough.grow.presentation.recommend
+package com.softdough.grow.presentation.routine.recommend
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

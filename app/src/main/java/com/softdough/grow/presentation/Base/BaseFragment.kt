@@ -1,4 +1,4 @@
-package com.softdough.grow.presentation
+package com.softdough.grow.presentation.Base
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
-import com.softdough.grow.presentation.recommend.RecommendViewModel
 
 abstract class BaseFragment<T_DATA_BINDING : ViewDataBinding, T_VIEW_MODEL : ViewModel> :
     Fragment() {

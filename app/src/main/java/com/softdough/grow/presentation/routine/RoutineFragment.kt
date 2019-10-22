@@ -14,16 +14,13 @@ import com.softdough.grow.R
 import com.softdough.grow.databinding.FragmentRoutineBinding
 import com.softdough.grow.databinding.ViewRoutineBinding
 import com.softdough.grow.databinding.ViewRoutineCollectionBinding
-import com.softdough.grow.presentation.BaseFragment
+import com.softdough.grow.presentation.Base.BaseFragment
 import com.softdough.grow.presentation.model.RoutineCollectionItem
 import com.softdough.grow.presentation.model.RoutineItem
 import com.softdough.grow.util.ScreenUtil
 
 
 abstract class RoutineFragment<T_VIEW_MODEL : ViewModel> : BaseFragment<FragmentRoutineBinding, T_VIEW_MODEL>() {
-
-    val DP_WIDTH = ScreenUtil.dpToPx(16).toInt()
-    val DP_HEIGHT = ScreenUtil.dpToPx(7).toInt()
 
     override val resourceId: Int = R.layout.fragment_routine
 
@@ -75,7 +72,7 @@ abstract class RoutineFragment<T_VIEW_MODEL : ViewModel> : BaseFragment<Fragment
         }
 
         binding.routineGridLayout.apply {
-            var childWidth = (ScreenUtil.deviceWidth() - (DP_WIDTH * 3)) / 2
+            var childWidth = (ScreenUtil.deviceWidth() - (ScreenUtil.DP_16 * 3)) / 2
 
             routineData.forEachIndexed { index, item ->
                 var viewRoutinebinding: ViewRoutineBinding =
@@ -85,10 +82,10 @@ abstract class RoutineFragment<T_VIEW_MODEL : ViewModel> : BaseFragment<Fragment
 
                 viewRoutinebinding.root.layoutParams = params.apply {
                     width = childWidth
-                    leftMargin = DP_WIDTH
+                    leftMargin = ScreenUtil.DP_16
 
                     if (index >= 2) {
-                        topMargin = DP_HEIGHT * 3
+                        topMargin = ScreenUtil.DP_14 * 3
                     }
                 }
 
