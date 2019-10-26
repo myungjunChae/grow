@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.softdough.grow.domain.model.Routine
+import com.softdough.grow.presentation.routine.RoutineViewModel
 import com.softdough.grow.presentation.routine.RoutineFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CustomFragment : RoutineFragment<CustomViewModel>() {
 
-    override var viewModel: CustomViewModel = CustomViewModel()
+    private val vm: CustomViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -14,26 +14,26 @@ import com.softdough.grow.R
 import com.softdough.grow.databinding.FragmentRoutineBinding
 import com.softdough.grow.databinding.ViewRoutineBinding
 import com.softdough.grow.databinding.ViewRoutineCollectionBinding
+import com.softdough.grow.domain.model.CategoryItem
+import com.softdough.grow.domain.model.RoutineItem
 import com.softdough.grow.presentation.Base.BaseFragment
-import com.softdough.grow.presentation.model.RoutineCollectionItem
-import com.softdough.grow.presentation.model.RoutineItem
 import com.softdough.grow.util.ScreenUtil
 
 
-abstract class RoutineFragment<T_VIEW_MODEL : ViewModel> : BaseFragment<FragmentRoutineBinding, T_VIEW_MODEL>() {
+abstract class RoutineFragment<T_VIEW_MODEL : ViewModel> : BaseFragment<FragmentRoutineBinding>() {
 
     override val resourceId: Int = R.layout.fragment_routine
 
-    private var collectionData: List<RoutineCollectionItem> = listOf(
-        RoutineCollectionItem(R.drawable.routine_collection_image_2, "title1"),
-        RoutineCollectionItem(R.drawable.routine_collection_image_2, "title2")
+    private var collectionData: List<CategoryItem> = listOf(
+        //RoutineCollectionItem(R.drawable.routine_collection_image_2, "title1"),
+        //RoutineCollectionItem(R.drawable.routine_collection_image_2, "title2")
     )
 
     private var routineData: List<RoutineItem> = listOf(
-        RoutineItem(R.drawable.routine_collection_image_2, "routine1"),
-        RoutineItem(R.drawable.routine_collection_image_2, "routine2"),
-        RoutineItem(R.drawable.routine_collection_image_2, "routine3"),
-        RoutineItem(R.drawable.routine_collection_image_2, "routine4")
+        //RoutineItem(R.drawable.routine_collection_image_2, "routine1"),
+        //RoutineItem(R.drawable.routine_collection_image_2, "routine2"),
+        //RoutineItem(R.drawable.routine_collection_image_2, "routine3"),
+        //RoutineItem(R.drawable.routine_collection_image_2, "routine4")
     )
 
     override fun onCreateView(
@@ -90,10 +90,10 @@ abstract class RoutineFragment<T_VIEW_MODEL : ViewModel> : BaseFragment<Fragment
                 }
 
                 viewRoutinebinding.routineImage.apply {
-                    background = context.getDrawable(item.resourceId)
+                    //background = context.getDrawable(item.resourceId)
                 }
                 viewRoutinebinding.routineTitle.apply {
-                    text = item.title
+                    //text = item.title
                 }
 
                 this.addView(viewRoutinebinding.root)
@@ -105,7 +105,7 @@ abstract class RoutineFragment<T_VIEW_MODEL : ViewModel> : BaseFragment<Fragment
 }
 
 class RoutineCollectionPagerAdapter(
-    private val collectionList: List<RoutineCollectionItem>,
+    private val collectionList: List<CategoryItem>,
     private val context: Context
 ) : PagerAdapter() {
 

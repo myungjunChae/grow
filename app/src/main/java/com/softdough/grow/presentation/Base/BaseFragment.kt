@@ -10,12 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 
-abstract class BaseFragment<T_DATA_BINDING : ViewDataBinding, T_VIEW_MODEL : ViewModel> :
+abstract class BaseFragment<T_DATA_BINDING : ViewDataBinding> :
     Fragment() {
 
     abstract val resourceId: Int
-
-    abstract var viewModel: T_VIEW_MODEL
 
     lateinit var binding: T_DATA_BINDING
 
@@ -24,8 +22,6 @@ abstract class BaseFragment<T_DATA_BINDING : ViewDataBinding, T_VIEW_MODEL : Vie
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        viewModel = ViewModelProviders.of(this).get(viewModel::class.java)
 
         binding = DataBindingUtil.inflate<T_DATA_BINDING>(inflater, resourceId, container, false)
 

@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.softdough.grow.presentation.routine.RoutineFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RecommendFragment : RoutineFragment<RecommendViewModel>() {
 
-    override var viewModel: RecommendViewModel = RecommendViewModel()
+    private val vm: RecommendViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -1,13 +1,12 @@
 package com.softdough.grow.presentation.routine.recommend
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.softdough.grow.domain.usecase.CategoryUseCase
+import com.softdough.grow.domain.usecase.RoutineUseCase
+import com.softdough.grow.presentation.routine.RoutineViewModel
 
-class RecommendViewModel : ViewModel() {
+class RecommendViewModel(
+    private val categoryUseCase: CategoryUseCase,
+    private val routineUseCase: RoutineUseCase
+) : RoutineViewModel(categoryUseCase, routineUseCase) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "Recommend"
-    }
-    val text: LiveData<String> = _text
 }

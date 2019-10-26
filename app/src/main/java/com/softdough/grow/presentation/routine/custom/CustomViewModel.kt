@@ -1,13 +1,12 @@
 package com.softdough.grow.presentation.routine.custom
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.softdough.grow.domain.usecase.CategoryUseCase
+import com.softdough.grow.domain.usecase.RoutineUseCase
+import com.softdough.grow.presentation.routine.RoutineViewModel
 
-class CustomViewModel : ViewModel() {
+class CustomViewModel(
+    private val categoryUseCase: CategoryUseCase,
+    private val routineUseCase: RoutineUseCase
+) : RoutineViewModel(categoryUseCase, routineUseCase) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "Custom"
-    }
-    val text: LiveData<String> = _text
 }

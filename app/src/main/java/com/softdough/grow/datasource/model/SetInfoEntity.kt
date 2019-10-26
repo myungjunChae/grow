@@ -3,7 +3,7 @@ package com.softdough.grow.datasource.model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class RoutineSetEntity(
+data class SetInfoEntity(
     @SerializedName("setId") @Expose val id: Long,
     @SerializedName("setNumber") @Expose val setNumber: Int,
     @SerializedName("reps") @Expose val reps: Int,
