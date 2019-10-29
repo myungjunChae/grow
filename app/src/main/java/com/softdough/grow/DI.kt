@@ -9,11 +9,10 @@ import com.softdough.grow.datasource.local.RoutineLocalDataSourceImpl
 import com.softdough.grow.datasource.local.SharedPreference
 import com.softdough.grow.datasource.remote.*
 import com.softdough.grow.domain.usecase.AccountUseCase
-import com.softdough.grow.domain.usecase.CategoryRoutinesUseCase
 import com.softdough.grow.domain.usecase.CategoryUseCase
 import com.softdough.grow.domain.usecase.RoutineUseCase
-import com.softdough.grow.presentation.routine.custom.CustomViewModel
-import com.softdough.grow.presentation.routine.recommend.RecommendViewModel
+import com.softdough.grow.presentation.Routine.custom.CustomViewModel
+import com.softdough.grow.presentation.Routine.recommend.RecommendViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.loadKoinModules
@@ -46,7 +45,6 @@ val viewModelModule: Module = module {
 
 val usecaseModule: Module = module {
     factory { AccountUseCase(accountRepository = get()) }
-    factory { CategoryRoutinesUseCase(categoryRepository = get(), routineRepository = get()) }
     factory { CategoryUseCase(categoryRepository = get()) }
     factory { RoutineUseCase(routineRepository = get()) }
 }
@@ -59,13 +57,13 @@ val repositoryModule: Module = module {
 
 val dataSourceModule: Module = module {
     single { AccountRemoteDataSourceImpl(api = accountApi) }
-    single { AccountLocalDataSourceImpl(sharedPreference = get(ACCOUNT_PREFERENCE)) }
+    single { AccountLocalDataSourceImpl(pref = get(ACCOUNT_PREFERENCE)) }
 
     single { CategoryRemoteDataSourceImpl(api = categoryApi) }
-    single { CategoryLocalDataSourceImpl(sharedPreference = get(CATEGORY_PREFERENCE)) }
+    single { CategoryLocalDataSourceImpl(pref = get(CATEGORY_PREFERENCE)) }
 
     single { RoutineRemoteDataSourceImpl(api = routineApi) }
-    single { RoutineLocalDataSourceImpl(sharedPreference = get(ROUTINE_PREFERENCE)) }
+    single { RoutineLocalDataSourceImpl(pref = get(ROUTINE_PREFERENCE)) }
 }
 
 val remoteModule: Module = module {
@@ -75,24 +73,28 @@ val remoteModule: Module = module {
 }
 
 val localModule: Module = module {
-    single(ACCOUNT_PREFERENCE) { SharedPreference(androidContext(), "default") }
-    single(CATEGORY_PREFERENCE) { SharedPreference(androidContext(), "default") }
-    single(ROUTINE_PREFERENCE) { SharedPreference(androidContext(), "default") }
+    single(ACCOUNT_PREFERENCE) { SharedPreference(androidContext(), ACCOUNT) }
+    single(CATEGORY_PREFERENCE) { SharedPreference(androidContext(), CATEGORY) }
+    single(ROUTINE_PREFERENCE) { SharedPreference(androidContext(), ROUTINE) }
 }
 
-private val BASE_URL = ""
+private const val BASE_URL = "192.168.0.123/"
 
 private val retrofit: Retrofit =
     Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJavaCallAdapterFactory.create()) // Why this line needed
+        .addCallAdapterFactory(RxJavaCallAdapterFactory.create()) // Call 객체가 아닌 RxJava 형태로 받기 위함
         .build()
 
 private val accountApi: AccountApi = retrofit.create(AccountApi::class.java)
 private val categoryApi: CategoryApi = retrofit.create(CategoryApi::class.java)
 private val routineApi: RoutineApi = retrofit.create(RoutineApi::class.java)
 
-private val ACCOUNT_PREFERENCE = named("ACCOUNT_PREFERENCE")
-private val CATEGORY_PREFERENCE = named("CATEGORY_PREFERENCE")
-private val ROUTINE_PREFERENCE = named("ROUTINE_PREFERENCE")
+private const val ACCOUNT = "ACCOUNT"
+private const val CATEGORY = "CATEGORY"
+private const val ROUTINE = "ROUTINE"
+
+private val ACCOUNT_PREFERENCE = named(ACCOUNT)
+private val CATEGORY_PREFERENCE = named(CATEGORY)
+private val ROUTINE_PREFERENCE = named(ROUTINE)

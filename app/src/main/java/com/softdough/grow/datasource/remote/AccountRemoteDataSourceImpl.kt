@@ -2,7 +2,7 @@ package com.softdough.grow.datasource.remote
 
 import android.accounts.Account
 import com.softdough.grow.data.datasource.AccountRemoteDataSource
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 
 class AccountRemoteDataSourceImpl(private val api : AccountApi) : AccountRemoteDataSource{
     override fun get(): Single<Account> {

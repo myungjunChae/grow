@@ -1,4 +1,4 @@
-package com.softdough.grow.presentation.indicator
+package com.softdough.grow.presentation.Indicator
 
 import android.content.Context
 import android.util.AttributeSet

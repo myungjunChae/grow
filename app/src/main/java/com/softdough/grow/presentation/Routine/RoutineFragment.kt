@@ -1,4 +1,4 @@
-package com.softdough.grow.presentation.routine
+package com.softdough.grow.presentation.Routine
 
 import android.content.Context
 import android.os.Bundle
@@ -24,7 +24,7 @@ abstract class RoutineFragment<T_VIEW_MODEL : ViewModel> : BaseFragment<Fragment
 
     override val resourceId: Int = R.layout.fragment_routine
 
-    private var collectionData: List<CategoryItem> = listOf(
+    private val collectionData: List<CategoryItem> = listOf(
         //RoutineCollectionItem(R.drawable.routine_collection_image_2, "title1"),
         //RoutineCollectionItem(R.drawable.routine_collection_image_2, "title2")
     )

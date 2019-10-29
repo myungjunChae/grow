@@ -1,17 +1,18 @@
-package com.softdough.grow.presentation.routine.custom
+package com.softdough.grow.presentation.Routine.custom
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.softdough.grow.domain.model.Routine
-import com.softdough.grow.presentation.routine.RoutineViewModel
-import com.softdough.grow.presentation.routine.RoutineFragment
+import com.softdough.grow.injectionFeature
+import com.softdough.grow.presentation.Routine.RoutineFragment
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.context.startKoin
 
 class CustomFragment : RoutineFragment<CustomViewModel>() {
 
-    private val vm: CustomViewModel by viewModel()
+    private val vm: CustomViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,6 +20,11 @@ class CustomFragment : RoutineFragment<CustomViewModel>() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
+
+        startKoin { injectionFeature() }
+
+
+
         return binding.root
     }
 }

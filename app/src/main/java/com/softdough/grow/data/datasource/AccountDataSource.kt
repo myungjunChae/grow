@@ -1,7 +1,7 @@
 package com.softdough.grow.data.datasource
 
 import android.accounts.Account
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 
 interface AccountRemoteDataSource{
     fun get() : Single<Account>

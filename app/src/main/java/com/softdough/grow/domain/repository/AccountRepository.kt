@@ -1,10 +1,10 @@
 package com.softdough.grow.domain.repository
 
 import android.accounts.Account
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 
 interface AccountRepository{
-    fun get() : Single<Account>
+    fun get(cached: Boolean) : Single<Account>
 
     fun set(account: Account)
 }
