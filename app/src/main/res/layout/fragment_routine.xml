@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorWhite"
+                tools:context=".presentation.main.MainActivity">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/exist_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible">
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/vertical_guideline_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_begin="16dp" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/vertical_guideline_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_end="16dp" />
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/routine_collection_view_pager"
+                        android:layout_width="0dp"
+                        android:layout_height="240dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.softdough.grow.presentation.indicator.Indicator
+                        android:id="@+id/routine_collection_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginBottom="7dp"
+                        app:layout_constraintBottom_toBottomOf="@id/routine_collection_view_pager"
+                        app:layout_constraintEnd_toEndOf="@id/routine_collection_view_pager" />
+
+                    <TextView
+                        android:id="@+id/routine_collection_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        app:layout_constraintStart_toStartOf="@id/vertical_guideline_1"
+                        app:layout_constraintTop_toBottomOf="@id/routine_collection_view_pager"
+                        tools:text="개인 운동 및 커스텀 프로그램" />
+
+                    <TextView
+                        android:id="@+id/routine_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="28dp"
+                        android:text="세부 루틴"
+                        app:layout_constraintStart_toStartOf="@id/vertical_guideline_1"
+                        app:layout_constraintTop_toBottomOf="@id/routine_collection_title" />
+
+                    <TextView
+                        android:id="@+id/routine_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:text="원하는 방식으로 루틴을 구성하세요"
+                        app:layout_constraintStart_toStartOf="@id/vertical_guideline_1"
+                        app:layout_constraintTop_toBottomOf="@id/routine_title" />
+
+                    <ImageView
+                        android:id="@+id/non_exist_detail_routine_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/image_not_found"
+                        android:visibility="invisible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/routine_description"
+                        ></ImageView>
+
+                    <GridLayout
+                        android:id="@+id/routine_grid_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:columnCount="2"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/vertical_guideline_2"
+                        app:layout_constraintStart_toStartOf="@id/vertical_guideline_1"
+                        app:layout_constraintTop_toBottomOf="@id/routine_description" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/non_exist_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible">
+
+                    <ImageView
+                        android:id="@+id/non_exist_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="37dp"
+                        android:background="@drawable/image_not_found"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+                    <TextView
+                        android:id="@+id/non_exist_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:text="커스텀 루틴이 존재하지 않습니다!"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/non_exist_image" />
+
+                    <Button
+                        android:id="@+id/non_exist_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/button_blue_long"
+                        android:text="커스텀 루틴 만들기"
+                        android:textColor="@color/colorWhite"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/non_exist_text" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <RelativeLayout
+                    android:id="@+id/loading_panel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:visibility="invisible"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="0dp">
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="true" />
+                </RelativeLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+        b<RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/floating_button"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/button_blue_short"
+                android:text="루틴 생성하기"
+                android:textColor="@color/colorWhite" />
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
