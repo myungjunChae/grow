@@ -5,5 +5,6 @@ import com.google.gson.annotations.SerializedName
 
 data class Routine(
     val id : Long,
-    val name : String
+    val name : String,
+    val url:String
 )

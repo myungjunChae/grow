@@ -7,5 +7,7 @@ interface RoutineRepository {
 
     fun get(categoryId: Long, cached: Boolean): Single<List<Routine>>
 
-    fun set(categoryId : Long, routineName : String) : Single<List<Routine>>
+    fun set(categoryId: Long, routineName: String): Single<Routine>
+
+    fun link(routineId: Long, exerciseId: Long): Single<Routine>
 }

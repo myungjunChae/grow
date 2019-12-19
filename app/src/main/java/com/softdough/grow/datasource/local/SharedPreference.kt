@@ -17,14 +17,20 @@ class SharedPreference(context: Context, name: String) {
     val DEFAULT_FLOAT = 0F
     val DEFAULT_BOOLEAN = false
 
+    val STRING_TYPE = ""
+    val INT_TYPE = 0
+    val LONG_TYPE = 0L
+    val FLOAT_TYPE = 0F
+    val BOOLEAN_TYPE = false
+
     //basic type
-    inline fun <reified T> getValue(key: String, type: T): T {
-        return when (type) {
-            String::class.java -> this.pref.getString(key, DEFAULT_STRING) as T
-            Int::class.java -> this.pref.getInt(key, DEFAULT_INT) as T
-            Long::class.java -> this.pref.getLong(key, DEFAULT_LONG) as T
-            Float::class.java -> this.pref.getFloat(key, DEFAULT_FLOAT) as T
-            Boolean::class.java -> this.pref.getBoolean(key, DEFAULT_BOOLEAN) as T
+    fun <T> getValue(key: String, type: T): T {
+        return when(type){
+            STRING_TYPE -> this.pref.getString(key, DEFAULT_STRING) as T
+            INT_TYPE -> this.pref.getInt(key, DEFAULT_INT) as T
+            LONG_TYPE -> this.pref.getLong(key, DEFAULT_LONG) as T
+            FLOAT_TYPE -> this.pref.getFloat(key, DEFAULT_FLOAT) as T
+            BOOLEAN_TYPE -> this.pref.getBoolean(key, DEFAULT_BOOLEAN) as T
             else -> {
                 throw IllegalArgumentException()
             }
@@ -39,12 +45,13 @@ class SharedPreference(context: Context, name: String) {
 
     fun <T> setValue(key: Any, value: T): T {
         when (value) {
-            value is String -> this.pref.edit().putString(key.toString(), value as String).apply()
-            value is Int -> this.pref.edit().putInt(key.toString(), value as Int).apply()
-            value is Long -> this.pref.edit().putLong(key.toString(), value as Long).apply()
-            value is Float -> this.pref.edit().putFloat(key.toString(), value as Float).apply()
-            value is Boolean -> this.pref.edit().putBoolean(key.toString(), value as Boolean).apply()
+            is String -> this.pref.edit().putString(key.toString(), value as String).apply()
+            is Int -> this.pref.edit().putInt(key.toString(), value as Int).apply()
+            is Long -> this.pref.edit().putLong(key.toString(), value as Long).apply()
+            is Float -> this.pref.edit().putFloat(key.toString(), value as Float).apply()
+            is Boolean -> this.pref.edit().putBoolean(key.toString(), value as Boolean).apply()
             else -> {
+                //TODO : 오류있음 확인
                 var json = gson.toJson(value)
                 setValue(key, json)
             }

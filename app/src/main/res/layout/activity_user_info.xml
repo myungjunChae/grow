@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/user_info_background"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_guideline_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="32dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_guideline_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="32dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontal_guideline_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="@fraction/userInfoTitleTopMargin" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="유저 정보 입력"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@id/vertical_guideline_1"
+            app:layout_constraintTop_toBottomOf="@id/horizontal_guideline_1" />
+
+        <com.softdough.grow.presentation.custom.NoneSwipeViewPager
+            android:id="@+id/user_info_view_pager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/next_button"
+            app:layout_constraintEnd_toEndOf="@id/vertical_guideline_2"
+            app:layout_constraintStart_toStartOf="@id/vertical_guideline_1"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
+        <com.softdough.grow.presentation.indicator.Indicator
+            android:id="@+id/gender_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="7dp"
+            app:layout_constraintStart_toStartOf="@id/vertical_guideline_1"
+            app:layout_constraintTop_toTopOf="@id/next_button"
+            app:layout_constraintBottom_toBottomOf="@id/next_button"
+           />
+
+        <TextView
+            android:id="@+id/prev_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp"
+            android:text="뒤로가기"
+            android:textColor="@color/colorColumbiaBlue"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/vertical_guideline_1" />
+
+        <TextView
+            android:id="@+id/next_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp"
+            android:text="시작하기"
+            android:textColor="@color/colorMayaBlue"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/vertical_guideline_2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,15 +1,13 @@
 package com.softdough.grow.domain.usecase
 
-import android.accounts.Account
-import com.softdough.grow.data.repository.AccountRepositoryImpl
+import com.softdough.grow.domain.model.Account
+import com.softdough.grow.domain.repository.AccountRepository
 import io.reactivex.Single
 
-class AccountUseCase(private val accountRepository: AccountRepositoryImpl) {
-    /*fun get(): Single<Account> {
+class AccountUseCase(private val accountRepository: AccountRepository) {
 
-    }*/
-
-    /*fun set(account: Account) {
-
-    }*/
+    fun setUserInfo(account: Account) : Single<Account> {
+        return accountRepository.setAccount(account)
+    }
 }
+

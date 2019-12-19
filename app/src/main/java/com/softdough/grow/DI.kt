@@ -1,27 +1,32 @@
 package com.softdough.grow
 
-import com.softdough.grow.data.repository.AccountRepositoryImpl
-import com.softdough.grow.data.repository.CategoryRepositoryImpl
-import com.softdough.grow.data.repository.RoutineRepositoryImpl
-import com.softdough.grow.datasource.local.AccountLocalDataSourceImpl
-import com.softdough.grow.datasource.local.CategoryLocalDataSourceImpl
-import com.softdough.grow.datasource.local.RoutineLocalDataSourceImpl
-import com.softdough.grow.datasource.local.SharedPreference
+import android.content.Intent.CATEGORY_PREFERENCE
+import com.softdough.grow.data.repository.*
+import com.softdough.grow.datasource.local.*
 import com.softdough.grow.datasource.remote.*
-import com.softdough.grow.domain.usecase.AccountUseCase
-import com.softdough.grow.domain.usecase.CategoryUseCase
-import com.softdough.grow.domain.usecase.RoutineUseCase
-import com.softdough.grow.presentation.Routine.custom.CustomViewModel
-import com.softdough.grow.presentation.Routine.recommend.RecommendViewModel
+import com.softdough.grow.domain.usecase.*
+import com.softdough.grow.presentation.GlobalApplication
+import com.softdough.grow.presentation.ui.CreateRoutine.CreateRoutineViewModel
+import com.softdough.grow.presentation.ui.Login.LoginViewModel
+import com.softdough.grow.presentation.ui.Routine.custom.CustomViewModel
+import com.softdough.grow.presentation.ui.Routine.recommend.RecommendViewModel
+import com.softdough.grow.presentation.ui.Splash.SplashViewModel
+import com.softdough.grow.presentation.ui.UserInfo.UserInfoViewModel
+import com.softdough.grow.presentation.ui.Workout.WorkoutViewModel
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.context.GlobalContext
 import org.koin.core.context.loadKoinModules
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 fun injectionFeature() = loadFeature
 
@@ -39,62 +44,151 @@ private val loadFeature by lazy {
 }
 
 val viewModelModule: Module = module {
-    viewModel { RecommendViewModel(get(), get()) }
-    viewModel { CustomViewModel(get(), get()) }
+    viewModel { SplashViewModel(get()) }
+    viewModel { LoginViewModel(get()) }
+    viewModel { UserInfoViewModel(get(), get()) }
+
+    viewModel { RecommendViewModel(get(), get(), get()) }
+    viewModel { CustomViewModel(get(), get(), get()) }
+
+    viewModel { CreateRoutineViewModel(get(), get(), get()) }
+
+    viewModel { WorkoutViewModel(get(), get()) }
 }
 
 val usecaseModule: Module = module {
-    factory { AccountUseCase(accountRepository = get()) }
-    factory { CategoryUseCase(categoryRepository = get()) }
-    factory { RoutineUseCase(routineRepository = get()) }
+    factory { AuthorizeUseCase(authorizeRepository = get()) }
+    factory { AccountUseCase(get(named("crash_account_repository"))) }
+    factory { CategoryUseCase(get(named("crash_category_repository"))) }
+    factory { RoutineUseCase(get(named("crash_routine_repository"))) }
+    factory { ExerciseUseCase(get(named("crash_exercise_repository"))) }
+    factory { SetInfoUseCase(get(named("crash_set_info_repository"))) }
 }
 
 val repositoryModule: Module = module {
-    single { AccountRepositoryImpl(localDataSource = get(), remoteDataSource = get()) }
-    single { CategoryRepositoryImpl(localDataSource = get(), remoteDataSource = get()) }
-    single { RoutineRepositoryImpl(localDataSource = get(), remoteDataSource = get()) }
+    single { AuthorizeRepositoryImpl(localDataSource = get(), remoteDataSource = get()) }
+    single(named("crash_account_repository")) {
+        AccountRepositoryImpl(
+            localDataSource = get(),
+            remoteDataSource = get()
+        )
+    }
+    single(named("crash_category_repository")) {
+        CategoryRepositoryImpl(
+            localDataSource = get(named("crash_category_local_data")),
+            remoteDataSource = get()
+        )
+    }
+    single(named("crash_routine_repository")) {
+        RoutineRepositoryImpl(
+            localDataSource = get(),
+            remoteDataSource = get()
+        )
+    }
+    single(named("crash_exercise_repository")) {
+        ExerciseRepositoryImpl(
+            localDataSource = get(),
+            remoteDataSource = get()
+        )
+    }
+    single(named("crash_set_info_repository")) {
+        SetInfoRepositoryImpl(
+            localDataSource = get(),
+            remoteDataSource = get()
+        )
+    }
 }
 
 val dataSourceModule: Module = module {
-    single { AccountRemoteDataSourceImpl(api = accountApi) }
-    single { AccountLocalDataSourceImpl(pref = get(ACCOUNT_PREFERENCE)) }
+    single { AuthorizeRemoteDataSourceImpl(get()) }
+    single { AuthorizeLocalDataSourceImpl(pref = get(named(AUTHORIZE))) }
 
-    single { CategoryRemoteDataSourceImpl(api = categoryApi) }
-    single { CategoryLocalDataSourceImpl(pref = get(CATEGORY_PREFERENCE)) }
+    single { AccountRemoteDataSourceImpl(get()) }
+    single { AccountLocalDataSourceImpl(pref = get(named(ACCOUNT))) }
 
-    single { RoutineRemoteDataSourceImpl(api = routineApi) }
-    single { RoutineLocalDataSourceImpl(pref = get(ROUTINE_PREFERENCE)) }
+    single { CategoryRemoteDataSourceImpl(get()) }
+
+    single(named("crash_category_local_data")) {
+        CategoryLocalDataSourceImpl(pref = get(named(CATEGORY)))
+    }
+
+    single { RoutineRemoteDataSourceImpl(get()) }
+    single { RoutineLocalDataSourceImpl(pref = get(named(ROUTINE))) }
+
+    single { ExerciseRemoteDataSourceImpl(get()) }
+    single { ExerciseLocalDataSourceImpl(pref = get(named(EXERCISE))) }
+
+    single { SetInfoRemoteDataSourceImpl(get()) }
+    single { SetInfoLocalDataSourceImpl(pref = get(named(SETINFO))) }
 }
 
 val remoteModule: Module = module {
+    single { authApi }
     single { accountApi }
     single { categoryApi }
     single { routineApi }
+    single { exerciseApi }
+    single { setInfoApi }
 }
 
 val localModule: Module = module {
-    single(ACCOUNT_PREFERENCE) { SharedPreference(androidContext(), ACCOUNT) }
-    single(CATEGORY_PREFERENCE) { SharedPreference(androidContext(), CATEGORY) }
-    single(ROUTINE_PREFERENCE) { SharedPreference(androidContext(), ROUTINE) }
+    single(named(AUTHORIZE)) { SharedPreference(androidContext(), AUTHORIZE) }
+    single(named(ACCOUNT)) { SharedPreference(androidContext(), ACCOUNT) }
+    single(named(CATEGORY)) { SharedPreference(androidContext(), CATEGORY) }
+    single(named(ROUTINE)) { SharedPreference(androidContext(), ROUTINE) }
+    single(named(EXERCISE)) { SharedPreference(androidContext(), EXERCISE) }
+    single(named(SETINFO)) { SharedPreference(androidContext(), SETINFO) }
 }
 
-private const val BASE_URL = "192.168.0.123/"
+//private const val BASE_URL = "http://172.16.208.79:8080/"
+private const val BASE_URL = "http://35.213.99.68:8080/"
+
+private val LogInterceptor = HttpLoggingInterceptor().apply {
+    level = HttpLoggingInterceptor.Level.BODY
+}
+
+//private val client = OkHttpClient.Builder().addInterceptor(LogInterceptor).build()
+
+private val client = OkHttpClient.Builder().apply {
+    addInterceptor { chain ->
+        val original = chain.request()
+
+        // Request customization: add request headers
+        val requestBuilder = original.newBuilder()
+            .header(
+                "Authorization",
+                "Bearer " + GlobalApplication.jwtToken
+            ) // <-- this is the important line
+
+        val request = requestBuilder.build()
+        chain.proceed(request)
+    }
+
+    addNetworkInterceptor(LogInterceptor)
+
+    connectTimeout(30, TimeUnit.SECONDS)
+    readTimeout(30, TimeUnit.SECONDS)
+}.build()
 
 private val retrofit: Retrofit =
     Retrofit.Builder()
+        .client(client)
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJavaCallAdapterFactory.create()) // Call 객체가 아닌 RxJava 형태로 받기 위함
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // Call 객체가 아닌 RxJava 형태로 받기 위함
         .build()
 
+
+private val authApi: AuthApi = retrofit.create(AuthApi::class.java)
 private val accountApi: AccountApi = retrofit.create(AccountApi::class.java)
 private val categoryApi: CategoryApi = retrofit.create(CategoryApi::class.java)
 private val routineApi: RoutineApi = retrofit.create(RoutineApi::class.java)
+private val exerciseApi: ExerciseApi = retrofit.create(ExerciseApi::class.java)
+private val setInfoApi: SetInfoApi = retrofit.create(SetInfoApi::class.java)
 
+private const val AUTHORIZE = "AUTHORIZE"
 private const val ACCOUNT = "ACCOUNT"
 private const val CATEGORY = "CATEGORY"
 private const val ROUTINE = "ROUTINE"
-
-private val ACCOUNT_PREFERENCE = named(ACCOUNT)
-private val CATEGORY_PREFERENCE = named(CATEGORY)
-private val ROUTINE_PREFERENCE = named(ROUTINE)
+private const val EXERCISE = "EXERCISE"
+private const val SETINFO = "SETINFO"

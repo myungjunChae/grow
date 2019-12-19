@@ -5,11 +5,12 @@ import com.softdough.grow.data.datasource.AccountLocalDataSource
 import io.reactivex.Single
 
 class AccountLocalDataSourceImpl(private val pref : SharedPreference) : AccountLocalDataSource{
-    override fun get(): Single<Account> {
+
+    override fun getAccount(): Single<com.softdough.grow.domain.model.Account> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun set(accout: Account) {
+    override fun setAccount(account: com.softdough.grow.domain.model.Account) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

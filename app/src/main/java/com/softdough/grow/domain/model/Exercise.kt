@@ -6,7 +6,8 @@ import com.google.gson.annotations.SerializedName
 data class Exercise(
     val id: Long,
     val name: String,
-    val partials: List<String>,
-    val motions: List<String>,
+    val partials: Set<String>,
+    val motions: Set<String>,
     val tool: String
 )
+

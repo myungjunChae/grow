@@ -6,5 +6,6 @@ import com.google.gson.annotations.SerializedName
 data class Category(
     val id:Long,
     val name:String,
-    val type:String
+    val type:String,
+    val url:String
 )

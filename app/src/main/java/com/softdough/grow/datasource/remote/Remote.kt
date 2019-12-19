@@ -1,42 +1,63 @@
 package com.softdough.grow.datasource.remote
 
-import com.softdough.grow.datasource.model.AccountEntity
-import com.softdough.grow.datasource.model.CategoryEntity
-import com.softdough.grow.datasource.model.RoutineEntity
+import com.google.gson.JsonObject
+import com.softdough.grow.datasource.model.*
+import io.reactivex.Observable
 import io.reactivex.Single
+import retrofit2.Response
 import retrofit2.http.*
 
-//TODO : jwt token 맵핑
+
+interface AuthApi {
+    @POST("oauth/login/kakao")
+    fun getJwtToken(@Body json: JsonObject): Single<Response<JsonObject>>
+}
+
 interface AccountApi {
-    @Headers("Authorization : jwt")
-    @GET("account")
-    fun getAccount(): Single<AccountEntity>
+    @PUT("account")
+    fun setAccount(@Body json: JsonObject): Single<AccountEntity>
 }
 
 interface CategoryApi {
     //전체 카테고리
-    //@Headers("Authorization : jwt")
     @GET("category")
     fun getAllCategory(): Single<List<CategoryEntity>>
 
     //타입별 카테고리
-    //@Headers("Authorization : jwt")
-    @GET("category/{type}")
-    fun getTypedCategory(@Path("type") type: String): Single<List<CategoryEntity>>
+    @GET("category/all/")
+    fun getTypedCategory(@Query("categoryType") type: String): Single<List<CategoryEntity>>
 
     //@Headers("Authorization : jwt")
-    @FormUrlEncoded
     @POST("category")
-    fun setCategory(@Field("categoryType") type: String, @Field("categoryName") name: String): Single<List<CategoryEntity>>
+    fun setCategory(@Body body: JsonObject): Single<List<CategoryEntity>>
 }
 
 interface RoutineApi {
-    //@Headers("Authorization : jwt")
-    @GET("routine/{category_id}")
-    fun getRoutine(@Path("category_id") categoryId: Long): Single<List<RoutineEntity>>
+    @GET("category/routines/")
+    fun getRoutine(@Query("categoryId") categoryId: Long): Single<List<RoutineEntity>>
 
-    //TODO : 카테고리 id 필드 점검
-    @FormUrlEncoded
     @POST("routine")
-    fun setRoutine(@Field("categoryId") categoryId: Long, @Field("routineName") name: String): Single<List<RoutineEntity>>
+    fun setRoutine(@Body json: JsonObject): Single<RoutineEntity>
+
+    @POST("routine/exercise")
+    fun linkRoutineExercise(@Body json: JsonObject) : Single<RoutineEntity>
+}
+
+interface ExerciseApi {
+    @GET("exercise/all")
+    fun getExerciseAll() : Single<List<ExerciseEntity>>
+
+    @GET("routine/exercise-list")
+    fun getExercise(@Query("routineId") routineId: Long) : Single<ExercisePojo>
+}
+
+interface SetInfoApi{
+    @GET("set-info")
+    fun getSetInfo(@Query("routineId") routineId : Long, @Query("exerciseId") exerciseId : Long): Single<SetPojo>
+
+    @POST("set-info")
+    fun setSetInfo(@Body json: JsonObject): Single<SetPojo>
+
+    @PUT("set-info")
+    fun putSetInfo()
 }

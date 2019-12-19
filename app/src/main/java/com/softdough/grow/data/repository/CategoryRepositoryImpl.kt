@@ -2,13 +2,15 @@ package com.softdough.grow.data.repository
 
 import com.softdough.grow.data.datasource.CategoryLocalDataSource
 import com.softdough.grow.data.datasource.CategoryRemoteDataSource
+import com.softdough.grow.datasource.local.CategoryLocalDataSourceImpl
+import com.softdough.grow.datasource.remote.CategoryRemoteDataSourceImpl
 import com.softdough.grow.domain.model.Category
 import com.softdough.grow.domain.repository.CategoryRepository
 import io.reactivex.Single
 
 class CategoryRepositoryImpl(
-    private val remoteDataSource: CategoryRemoteDataSource,
-    private val localDataSource: CategoryLocalDataSource
+    private val remoteDataSource: CategoryRemoteDataSourceImpl,
+    private val localDataSource: CategoryLocalDataSourceImpl
 ) : CategoryRepository {
 
     //전체 카테고리

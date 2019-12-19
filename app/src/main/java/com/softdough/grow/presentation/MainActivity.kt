@@ -9,7 +9,7 @@ import androidx.navigation.ui.setupWithNavController
 import android.view.Menu
 import com.softdough.grow.R
 import com.softdough.grow.databinding.ActivityMainBinding
-import com.softdough.grow.presentation.Base.BaseActivity
+import com.softdough.grow.presentation.base.BaseActivity
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 

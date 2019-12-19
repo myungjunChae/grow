@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--UserInfo-->
+    <fraction name="userInfoTitleTopMargin">0.136</fraction>
+    <fraction name="userInfoEditBoxTopMargin">0.332</fraction>
+
+</resources>

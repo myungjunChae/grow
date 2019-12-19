@@ -10,17 +10,16 @@ class RoutineRepositoryImpl(
     private val remoteDataSource: RoutineRemoteDataSourceImpl,
     private val localDataSource: RoutineLocalDataSourceImpl
 ) : RoutineRepository {
-
     override fun get(categoryId: Long, cached: Boolean): Single<List<Routine>> =
-        when(cached){
-            false-> remoteDataSource.get(categoryId)
-            true-> localDataSource.get(categoryId)
+        when (cached) {
+            false -> remoteDataSource.get(categoryId)
+            true -> localDataSource.get(categoryId)
         }
 
-    override fun set(categoryId: Long, name: String) : Single<List<Routine>> =
+    override fun set(categoryId: Long, name: String): Single<Routine> =
         remoteDataSource.set(categoryId, name)
-            .flatMap { Routines ->
-                localDataSource.set(categoryId, Routines)
-            }
+
+    override fun link(routineId: Long, exerciseId: Long): Single<Routine> =
+        remoteDataSource.link(routineId, exerciseId)
 
 }

@@ -1,16 +1,16 @@
 package com.softdough.grow.data.datasource
 
-import android.accounts.Account
+import com.softdough.grow.domain.model.Account
 import io.reactivex.Single
 
 interface AccountRemoteDataSource{
-    fun get() : Single<Account>
+    fun getAccount() : Single<Account>
 
-    fun set(accout: Account) : Single<Account>
+    fun setAccount(account: Account) : Single<Account>
 }
 
 interface AccountLocalDataSource{
-    fun get() : Single<Account>
+    fun getAccount() : Single<Account>
 
-    fun set(accout: Account)
+    fun setAccount(account: Account)
 }

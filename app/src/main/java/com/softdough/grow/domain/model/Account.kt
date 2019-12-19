@@ -4,11 +4,11 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class Account(
-    val email: String,
+    val email: String?,
     val name: String,
     val weight: Float,
     val height: Float,
     val gender: String,
-    val birth: String,
-    val kakaoId: Long
+    val age: Int,
+    val accountId: Long?
 )
